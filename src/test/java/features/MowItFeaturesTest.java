@@ -25,6 +25,6 @@ class MowItFeaturesTest {
         //When
         MowIt.main(mowItArguments);
         //Then
-        assertThat(outputStream).isEqualTo("1 3 N\n5 1 E");
+        assertThat(outputStream.toString()).isEqualTo("1 3 N\r\n5 1 E\r\n");
     }
 }
