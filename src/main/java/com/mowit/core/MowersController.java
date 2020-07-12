@@ -20,6 +20,8 @@ class MowersController {
             lawn.createLimitLawnCoordinates(lawnDimension);
             while (sc.hasNextLine()) {
                 String startingPosition = sc.nextLine();
+                Mower mower = new Mower();
+                mower.createStartingPosition(startingPosition);
                 String instructions = sc.nextLine();
                 //TODO: create Mowers with instructions
             }

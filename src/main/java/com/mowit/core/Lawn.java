@@ -1,24 +1,25 @@
 package com.mowit.core;
 
-import com.mowit.core.exception.LawnLimitParsingException;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.mowit.core.exception.InvalidCoordinates;
 
 class Lawn {
 
     Coordinates limitCoordinates;
 
-    public void createLimitLawnCoordinates(String dimensions) throws LawnLimitParsingException {
-        String pattern = "(^\\d+\\s\\d+$)";
-        Pattern lawnPattern = Pattern.compile(pattern);
-        Matcher matcher = lawnPattern.matcher(dimensions);
-        if (!matcher.find())
-            throw new LawnLimitParsingException(dimensions);
+    public void createLimitLawnCoordinates(String dimensions) throws InvalidCoordinates {
+        if (Coordinates.isInvalidCoordinates(dimensions))
+            throw new InvalidCoordinates(dimensions);
         limitCoordinates = new Coordinates(dimensions);
     }
 
     public Coordinates getLimitCoordinates() {
         return this.limitCoordinates;
+    }
+
+    public boolean isOutLawn(Coordinates coordinates) {
+        return coordinates.getX() < 0 ||
+                coordinates.getX() > limitCoordinates.getX()
+                || coordinates.getY() < 0
+                || coordinates.getY() > limitCoordinates.getY();
     }
 }
