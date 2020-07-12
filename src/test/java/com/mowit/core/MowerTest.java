@@ -19,10 +19,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class MowerTest {
     Lawn lawn;
     Mower mower;
+    String lawnFirstPosition;
 
     @BeforeEach
     void init() throws InvalidCoordinates {
         lawn = new Lawn();
+        lawnFirstPosition = "0 0 N";
         lawn.createLimitLawnCoordinates("5 5");
         mower = new Mower(lawn);
     }
@@ -44,7 +46,7 @@ class MowerTest {
         //Given
         Position exceptedPosition = new Position(new Coordinates(0, 0), Direction.NORTH);
         //When
-        mower.createStartingPosition("0 0 N");
+        mower.createStartingPosition(lawnFirstPosition);
         //Then
         assertThat(mower.getPosition()).isEqualTo(exceptedPosition);
     }
@@ -72,23 +74,25 @@ class MowerTest {
     @Test
     void should_turn_right() throws InvalidMowerStartingPosition {
         //Given
-        mower.createStartingPosition("0 0 N");
+        mower.createStartingPosition(lawnFirstPosition);
         Position exceptedPosition = new Position(new Coordinates(0, 0), Direction.EAST);
         //When
         mower.goRight();
         //Then
         assertThat(mower.getPosition()).isEqualToComparingFieldByField(exceptedPosition);
     }
+
     @Test
     void should_turn_left() throws InvalidMowerStartingPosition {
         //Given
-        mower.createStartingPosition("0 0 N");
+        mower.createStartingPosition(lawnFirstPosition);
         Position exceptedPosition = new Position(new Coordinates(0, 0), Direction.WEST);
         //When
         mower.goLeft();
         //Then
         assertThat(mower.getPosition()).isEqualToComparingFieldByField(exceptedPosition);
     }
+
     @Test
     void should_move_only_if_next_position_is_in_lawn() throws InvalidMowerStartingPosition {
         //Given

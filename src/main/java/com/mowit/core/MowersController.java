@@ -13,8 +13,8 @@ class MowersController {
         super();
     }
 
-    public void processFile(File invalid_instructions) throws IOException, InvalidCommand {
-        try(FileInputStream inputStream = new FileInputStream(invalid_instructions);
+    public void processFile(File inputCommands) throws IOException, InvalidCommand {
+        try(FileInputStream inputStream = new FileInputStream(inputCommands);
             Scanner sc = new Scanner(inputStream, "UTF-8")){
             String lawnDimension = sc.nextLine();
             Lawn lawn = new Lawn();
