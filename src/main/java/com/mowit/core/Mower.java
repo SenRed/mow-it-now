@@ -8,7 +8,6 @@ import com.mowit.core.geo.Coordinates;
 import com.mowit.core.geo.Direction;
 import com.mowit.core.geo.Position;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,11 +72,14 @@ public class Mower {
     }
 
     public void goLeft() {
+        new UnsupportedOperationException();
     }
 
     public void goRight() {
+        new UnsupportedOperationException();
     }
 
     public void goForward() {
+        new UnsupportedOperationException();
     }
 }

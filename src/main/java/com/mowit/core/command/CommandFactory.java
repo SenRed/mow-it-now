@@ -1,7 +1,6 @@
 package com.mowit.core.command;
 
 
-import com.mowit.core.exception.InvalidCommand;
 import com.mowit.core.exception.InvalidMovingCommand;
 
 import java.util.Collections;
