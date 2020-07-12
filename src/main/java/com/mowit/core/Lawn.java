@@ -1,6 +1,7 @@
 package com.mowit.core;
 
 import com.mowit.core.exception.InvalidCoordinates;
+import com.mowit.core.geo.Coordinates;
 
 class Lawn {
 

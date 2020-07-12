@@ -1,4 +1,4 @@
-package com.mowit.core;
+package com.mowit.core.geo;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

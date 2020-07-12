@@ -2,6 +2,9 @@ package com.mowit.core;
 
 import com.mowit.core.exception.InvalidCoordinates;
 import com.mowit.core.exception.InvalidMowerStartingPosition;
+import com.mowit.core.geo.Coordinates;
+import com.mowit.core.geo.Direction;
+import com.mowit.core.geo.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +19,7 @@ class MowerTest {
     void init() throws InvalidCoordinates {
         lawn = new Lawn();
         lawn.createLimitLawnCoordinates("5 5");
-        mower = new Mower();
-        mower.setLawn(lawn);
+        mower = new Mower(lawn);
     }
 
     @Test
@@ -25,7 +27,6 @@ class MowerTest {
         //Given
         String invalidPosition = "A 10 9";
         String positionOutOfLawn = "100 10 N";
-
         //When//Then
         assertThatThrownBy(() -> mower.createStartingPosition(invalidPosition))
                 .isInstanceOf(InvalidMowerStartingPosition.class);

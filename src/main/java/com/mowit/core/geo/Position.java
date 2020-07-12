@@ -1,4 +1,4 @@
-package com.mowit.core;
+package com.mowit.core.geo;
 
 import java.util.Objects;
 
