@@ -109,6 +109,11 @@ public class Mower implements Callable<Position> {
 
     @Override
     public Position call()  {
+        this.executeCommands();
         return this.position;
+    }
+
+    public void executeCommands()  {
+        this.commands.forEach(command -> command.execute(this));
     }
 }

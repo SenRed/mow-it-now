@@ -32,13 +32,12 @@ public class Position {
     }
 
     public void goRight() {
-        this.direction= this.direction.getRight();
+        this.direction = this.direction.getRight();
     }
 
     public void goLeft() {
-        this.direction= this.direction.getLeft();
+        this.direction = this.direction.getLeft();
     }
-
 
 
     public Coordinates getNextCoordinates() {
@@ -53,7 +52,7 @@ public class Position {
             nextCoordinates.incrementYAxis(1);
         }
         if (this.direction == Direction.SOUTH) {
-            nextCoordinates.incrementYAxis(-1 );
+            nextCoordinates.incrementYAxis(-1);
         }
         return nextCoordinates;
     }
@@ -62,4 +61,9 @@ public class Position {
         this.coordinates = nextCoordinates;
     }
 
+    @Override
+    public String toString() {
+        return this.coordinates.toString() +" "+ this.direction.getCode();
+
+    }
 }

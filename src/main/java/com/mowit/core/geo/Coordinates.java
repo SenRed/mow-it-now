@@ -64,4 +64,9 @@ public class Coordinates  {
     public void incrementYAxis(int factor) {
         this.y += factor;
     }
+
+    @Override
+    public String toString() {
+        return this.x + " " + this.y;
+    }
 }

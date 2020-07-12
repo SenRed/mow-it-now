@@ -49,7 +49,7 @@ class MowersController {
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
         List<Future<Position>> results = executor.invokeAll(this.mowers);
         for (Future<Position> result : results) {
-            System.out.println(result.get());
+            System.out.println(result.get().toString());
         }
         executor.shutdown();
     }

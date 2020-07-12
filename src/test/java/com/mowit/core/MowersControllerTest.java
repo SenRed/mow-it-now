@@ -1,11 +1,15 @@
 package com.mowit.core;
 
 import com.mowit.core.exception.InvalidCommand;
+import com.mowit.core.geo.Coordinates;
+import com.mowit.core.geo.Direction;
+import com.mowit.core.geo.Position;
 import org.junit.jupiter.api.Test;
 import util.FileLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -40,11 +44,16 @@ class MowersControllerTest {
         //Given
         File validFile = new File(FileLoader.getFile("instructions.txt"));
         MowersController mowersController = new MowersController();
+        List<Position> exceptedPositions = Arrays.asList(new Position(new Coordinates(1, 3), Direction.NORTH),
+                new Position(new Coordinates(5, 1), Direction.EAST));
         //When
         mowersController.processFile(validFile);
         mowersController.startMowing();
         //Then
         assertThat(mowersController.getThreadPoolSize()).isEqualTo(1);
+        assertThat(mowersController.getMowers())
+                .flatExtracting(Mower::getPosition)
+                .isEqualTo(exceptedPositions);
     }
 
 }
