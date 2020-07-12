@@ -5,9 +5,10 @@ import com.mowit.core.exception.InvalidFilePath;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class MowIt {
-    public static void main(String[] args) throws InvalidFilePath, IOException, InvalidCommand {
+    public static void main(String[] args) throws InvalidFilePath, IOException, InvalidCommand, ExecutionException, InterruptedException {
         if(args.length==0)
             throw new InvalidFilePath();
         File instructionsFile= new File(args[0]);
@@ -15,7 +16,6 @@ public class MowIt {
             throw new InvalidFilePath();
         MowersController controller = new MowersController();
         controller.processFile(instructionsFile);
-        //TODO controller.startMowing();
-        throw new UnsupportedOperationException();
+        controller.startMowing();
     }
 }

@@ -9,13 +9,14 @@ import util.FileLoader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MowItFeaturesTest {
 
     @Test
-    void it_should_return_when_no_obstacle_found() throws InvalidFilePath, IOException, InvalidCommand {
+    void it_should_return_when_no_obstacle_found() throws InvalidFilePath, IOException, InvalidCommand, ExecutionException, InterruptedException {
         //Given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
