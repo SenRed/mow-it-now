@@ -11,8 +11,9 @@ import com.mowit.core.geo.Position;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
 
-public class Mower {
+public class Mower implements Callable<Position> {
 
     Lawn lawn;
     Position position;
@@ -104,5 +105,10 @@ public class Mower {
         result = 31 * result + (position != null ? position.hashCode() : 0);
         result = 31 * result + (commands != null ? commands.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public Position call()  {
+        return this.position;
     }
 }

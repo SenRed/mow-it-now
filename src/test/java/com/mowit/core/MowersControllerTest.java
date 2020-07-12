@@ -7,6 +7,7 @@ import util.FileLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,6 +35,16 @@ class MowersControllerTest {
         //Then
         assertThat(mowersController.getMowers()).containsAll(expectedMowers);
     }
-    //TODO: should start mowing when rover are initiated
+
+    @Test void should_start_one_mower_on_one_time() throws InvalidCommand, ExecutionException, InterruptedException, IOException {
+        //Given
+        File validFile = new File(FileLoader.getFile("instructions.txt"));
+        MowersController mowersController = new MowersController();
+        //When
+        mowersController.processFile(validFile);
+        mowersController.startMowing();
+        //Then
+        assertThat(mowersController.getThreadPoolSize()).isEqualTo(1);
+    }
 
 }

@@ -106,5 +106,5 @@ class MowerTest {
         //Then
         assertThat(mower.getPosition()).isEqualToComparingFieldByField(exceptedPosition);
     }
-
+    //TODO: should_handle_obstacles
 }
