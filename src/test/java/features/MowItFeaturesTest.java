@@ -1,6 +1,7 @@
 package features;
 
 import com.mowit.core.MowIt;
+import com.mowit.core.exception.InvalidFilePath;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MowItFeaturesTest {
 
     @Test
-    void it_should_return_when_no_obstacle_found() {
+    void it_should_return_when_no_obstacle_found() throws InvalidFilePath {
         //Given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
