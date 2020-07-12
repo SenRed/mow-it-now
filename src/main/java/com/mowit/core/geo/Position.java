@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Coordinates coordinates;
-    private final Direction direction;
+    private Coordinates coordinates;
+    private Direction direction;
 
     public Position(Coordinates coordinates, Direction direction) {
         this.coordinates = coordinates;
@@ -29,5 +29,36 @@ public class Position {
         int result = coordinates != null ? coordinates.hashCode() : 0;
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
         return result;
+    }
+
+    public void goRight() {
+        this.direction= this.direction.getRight();
+    }
+
+    public void goLeft() {
+        this.direction= this.direction.getLeft();
+    }
+
+
+
+    public Coordinates getNextCoordinates() {
+        Coordinates nextCoordinates = new Coordinates(coordinates);
+        if (this.direction == Direction.EAST) {
+            nextCoordinates.incrementXAxis(1);
+        }
+        if (this.direction == Direction.WEST) {
+            nextCoordinates.incrementXAxis(-1);
+        }
+        if (this.direction == Direction.NORTH) {
+            nextCoordinates.incrementYAxis(1);
+        }
+        if (this.direction == Direction.SOUTH) {
+            nextCoordinates.incrementYAxis(-1 );
+        }
+        return nextCoordinates;
+    }
+
+    public void setCoordinates(Coordinates nextCoordinates) {
+        this.coordinates = nextCoordinates;
     }
 }

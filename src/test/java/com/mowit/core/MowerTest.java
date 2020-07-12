@@ -68,4 +68,39 @@ class MowerTest {
         //Then
         assertThat(mower.getCommands()).isEqualTo(expectedCommands);
     }
+
+    @Test
+    void should_turn_right() throws InvalidMowerStartingPosition {
+        //Given
+        mower.createStartingPosition("0 0 N");
+        Position exceptedPosition = new Position(new Coordinates(0, 0), Direction.EAST);
+        //When
+        mower.goRight();
+        //Then
+        assertThat(mower.getPosition()).isEqualToComparingFieldByField(exceptedPosition);
+    }
+    @Test
+    void should_turn_left() throws InvalidMowerStartingPosition {
+        //Given
+        mower.createStartingPosition("0 0 N");
+        Position exceptedPosition = new Position(new Coordinates(0, 0), Direction.WEST);
+        //When
+        mower.goLeft();
+        //Then
+        assertThat(mower.getPosition()).isEqualToComparingFieldByField(exceptedPosition);
+    }
+    @Test
+    void should_move_only_if_next_position_is_in_lawn() throws InvalidMowerStartingPosition {
+        //Given
+        mower.createStartingPosition("3 5 E");
+        Position exceptedPosition = new Position(new Coordinates(5, 5), Direction.SOUTH);
+        //When
+        mower.goForward();
+        mower.goForward();
+        mower.goForward();
+        mower.goRight();
+        //Then
+        assertThat(mower.getPosition()).isEqualToComparingFieldByField(exceptedPosition);
+    }
+
 }

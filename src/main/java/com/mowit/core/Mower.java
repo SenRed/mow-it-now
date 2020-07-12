@@ -72,14 +72,16 @@ public class Mower {
     }
 
     public void goLeft() {
-        new UnsupportedOperationException();
+        position.goLeft();
     }
 
     public void goRight() {
-        new UnsupportedOperationException();
+        position.goRight();
     }
 
     public void goForward() {
-        new UnsupportedOperationException();
+        Coordinates nextCoordinates = position.getNextCoordinates();
+        if(!lawn.isOutLawn(nextCoordinates))
+            this.position.setCoordinates(nextCoordinates);
     }
 }

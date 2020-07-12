@@ -20,6 +20,10 @@ public class Coordinates  {
         this.y = y;
     }
 
+    public Coordinates(Coordinates coordinates){
+        this.x=coordinates.x;
+        this.y=coordinates.y;
+    }
     public int getX() {
         return x;
     }
@@ -51,5 +55,13 @@ public class Coordinates  {
         int result = x;
         result = 31 * result + y;
         return result;
+    }
+
+    public void incrementXAxis(int factor) {
+        this.x += factor;
+    }
+
+    public void incrementYAxis(int factor) {
+        this.y += factor;
     }
 }
