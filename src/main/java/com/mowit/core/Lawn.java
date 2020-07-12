@@ -3,6 +3,8 @@ package com.mowit.core;
 import com.mowit.core.exception.InvalidCoordinates;
 import com.mowit.core.geo.Coordinates;
 
+import java.util.Objects;
+
 class Lawn {
 
     Coordinates limitCoordinates;
@@ -22,5 +24,20 @@ class Lawn {
                 coordinates.getX() > limitCoordinates.getX()
                 || coordinates.getY() < 0
                 || coordinates.getY() > limitCoordinates.getY();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Lawn lawn = (Lawn) o;
+
+        return Objects.equals(limitCoordinates, lawn.limitCoordinates);
+    }
+
+    @Override
+    public int hashCode() {
+        return limitCoordinates != null ? limitCoordinates.hashCode() : 0;
     }
 }

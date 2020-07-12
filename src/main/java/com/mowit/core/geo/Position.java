@@ -61,4 +61,5 @@ public class Position {
     public void setCoordinates(Coordinates nextCoordinates) {
         this.coordinates = nextCoordinates;
     }
+
 }

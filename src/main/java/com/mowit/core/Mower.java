@@ -10,6 +10,7 @@ import com.mowit.core.geo.Position;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class Mower {
 
@@ -83,5 +84,25 @@ public class Mower {
         Coordinates nextCoordinates = position.getNextCoordinates();
         if(!lawn.isOutLawn(nextCoordinates))
             this.position.setCoordinates(nextCoordinates);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Mower mower = (Mower) o;
+
+        if (!Objects.equals(lawn, mower.lawn)) return false;
+        if (!Objects.equals(position, mower.position)) return false;
+        return Objects.equals(commands, mower.commands);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = lawn != null ? lawn.hashCode() : 0;
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (commands != null ? commands.hashCode() : 0);
+        return result;
     }
 }
