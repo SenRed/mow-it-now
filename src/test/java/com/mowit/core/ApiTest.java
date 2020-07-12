@@ -2,6 +2,7 @@ package com.mowit.core;
 
 import com.mowit.core.exception.InvalidFilePath;
 import org.junit.jupiter.api.Test;
+import util.FileLoader;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,7 +15,7 @@ class ApiTest {
 
     @Test
     void should_run_if_valid_file_input() {
-        String validInstructionFile =this.getClass().getClassLoader().getResource("instructions.txt").getPath();
+        String validInstructionFile = FileLoader.getFile("instructions.txt");
         assertThatThrownBy(() -> MowIt.main(new String[]{validInstructionFile})).doesNotThrowAnyException();
     }
 

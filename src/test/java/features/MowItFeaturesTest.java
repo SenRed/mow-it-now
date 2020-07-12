@@ -3,6 +3,7 @@ package features;
 import com.mowit.core.MowIt;
 import com.mowit.core.exception.InvalidFilePath;
 import org.junit.jupiter.api.Test;
+import util.FileLoader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -16,7 +17,7 @@ class MowItFeaturesTest {
         //Given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
-        String instructionsFile = this.getClass().getClassLoader().getResource("instructions.txt").getPath();
+        String instructionsFile = FileLoader.getFile("instructions.txt");
         String[] mowItArguments = {instructionsFile};
         //When
         MowIt.main(mowItArguments);
