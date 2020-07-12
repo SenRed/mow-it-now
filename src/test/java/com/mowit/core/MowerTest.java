@@ -1,12 +1,17 @@
 package com.mowit.core;
 
+import com.mowit.core.command.Command;
+import com.mowit.core.command.CommandFactory;
 import com.mowit.core.exception.InvalidCoordinates;
+import com.mowit.core.exception.InvalidMovingCommand;
 import com.mowit.core.exception.InvalidMowerStartingPosition;
 import com.mowit.core.geo.Coordinates;
 import com.mowit.core.geo.Direction;
 import com.mowit.core.geo.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -44,4 +49,23 @@ class MowerTest {
         assertThat(mower.getPosition()).isEqualTo(exceptedPosition);
     }
 
+    @Test
+    void should_throw_invalid_moving_commands() {
+        assertThatThrownBy(() -> mower.createCommands("AB 9"))
+                .isInstanceOf(InvalidMovingCommand.class);
+    }
+
+    @Test
+    void should_create_valid_moving_commands() throws InvalidMovingCommand {
+        //Given
+        String validCommands = "ADG";
+        List<Command> expectedCommands = List.of(
+                CommandFactory.getCommandFromChar('A'),
+                CommandFactory.getCommandFromChar('D'),
+                CommandFactory.getCommandFromChar('G'));
+        //When
+        mower.createCommands(validCommands);
+        //Then
+        assertThat(mower.getCommands()).isEqualTo(expectedCommands);
+    }
 }

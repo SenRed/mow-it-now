@@ -24,11 +24,9 @@ class MowersController {
                 Mower mower = new Mower(lawn);
                 mower.createStartingPosition(startingPosition);
                 String instructions = sc.nextLine();
-                //TODO: create Mowers with instructions
+                mower.createCommands(instructions);
             }
         }
-        throw new UnsupportedOperationException();
-
     }
 
     public void startMowing() {

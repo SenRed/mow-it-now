@@ -1,17 +1,26 @@
 package com.mowit.core;
 
+import com.mowit.core.command.Command;
+import com.mowit.core.command.CommandFactory;
+import com.mowit.core.exception.InvalidMovingCommand;
 import com.mowit.core.exception.InvalidMowerStartingPosition;
 import com.mowit.core.geo.Coordinates;
 import com.mowit.core.geo.Direction;
 import com.mowit.core.geo.Position;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Mower {
 
     Lawn lawn;
     Position position;
+    List<Command> commands;
 
     public Mower(Lawn lawn) {
         this.lawn = lawn;
+        this.commands = new LinkedList<>();
     }
 
     public void createStartingPosition(String position) throws InvalidMowerStartingPosition {
@@ -53,4 +62,22 @@ public class Mower {
         return this.position;
     }
 
+    public void createCommands(String instructions) throws InvalidMovingCommand {
+        for (char c : instructions.toCharArray()) {
+            this.commands.add(CommandFactory.getCommandFromChar(c));
+        }
+    }
+
+    public List<Command> getCommands() {
+        return this.commands;
+    }
+
+    public void goLeft() {
+    }
+
+    public void goRight() {
+    }
+
+    public void goForward() {
+    }
 }
