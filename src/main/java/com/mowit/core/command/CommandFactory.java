@@ -13,18 +13,18 @@ public enum CommandFactory {
     RIGHT('D', new RightCommand()),
     FORWARD('A', new ForwardCommand());
 
-    Character codeCmd;
-    Command command;
+    private final Character codeCmd;
+    private final Command command;
 
-    private static Map<Character, Command> commandFactory;
+    private static Map<Character, Command> lookup;
 
     static {
-        commandFactory = new HashMap<>();
+        lookup = new HashMap<>();
         Map<Character, Command> map = new HashMap<>();
         for (CommandFactory value : CommandFactory.values()) {
             map.put(value.getCodeCmd(), value.getCommand());
         }
-        commandFactory = Collections.unmodifiableMap(map);
+        lookup = Collections.unmodifiableMap(map);
     }
 
     CommandFactory(Character codeCmd, Command command) {
@@ -32,17 +32,17 @@ public enum CommandFactory {
         this.command = command;
     }
 
-    public Character getCodeCmd() {
+    private Character getCodeCmd() {
         return codeCmd;
     }
 
-    public Command getCommand() {
+    private Command getCommand() {
         return command;
     }
 
 
     public static Command getCommandFromChar(Character character) throws InvalidMovingCommand {
-        return Optional.ofNullable(commandFactory.get(character))
+        return Optional.ofNullable(lookup.get(character))
                 .orElseThrow(() -> new InvalidMovingCommand(String.valueOf(character)));
     }
 

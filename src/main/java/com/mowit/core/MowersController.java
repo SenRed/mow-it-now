@@ -8,8 +8,17 @@ import com.mowit.core.geo.Position;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import static com.mowit.core.exception.ErrorMessages.*;
 
 class MowersController {
 
@@ -23,17 +32,17 @@ class MowersController {
     public void processFile(File inputCommands) throws IOException, InvalidCommand {
         List<Mower> extractedMowers = new LinkedList<>();
         try (FileInputStream inputStream = new FileInputStream(inputCommands);
-             Scanner sc = new Scanner(inputStream, "UTF-8")) {
+             Scanner sc = new Scanner(inputStream, StandardCharsets.UTF_8)) {
             String lawnDimension = sc.nextLine();
             Lawn lawn = new Lawn();
             lawn.createLimitLawnCoordinates(lawnDimension);
             if (!sc.hasNextLine()) {
-                throw new InvalidMowerStartingPosition("Empty command");
+                throw new InvalidMowerStartingPosition(EMPTY_MOWER_INITIAL_POSITION.getMsg());
             }
             while (sc.hasNextLine()) {
                 String startingPosition = sc.nextLine();
                 if (!sc.hasNextLine()) {
-                    throw new InvalidMovingCommand("Empty command");
+                    throw new InvalidMovingCommand(EMPTY_MOWER_MOVING_COMMANDS.getMsg() +(extractedMowers.size()+1));
                 }
                 String instructions = sc.nextLine();
                 Mower mower = new Mower(lawn);

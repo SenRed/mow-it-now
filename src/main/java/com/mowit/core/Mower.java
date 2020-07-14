@@ -15,9 +15,9 @@ import java.util.concurrent.Callable;
 
 public class Mower implements Callable<Position> {
 
-    Lawn lawn;
-    Position position;
-    List<Command> commands;
+    private final Lawn lawn;
+    private Position position;
+    private final List<Command> commands;
 
     public Mower(Lawn lawn) {
         this.lawn = lawn;
@@ -29,35 +29,21 @@ public class Mower implements Callable<Position> {
         if (inputPosition.length != 3)
             throw new InvalidMowerStartingPosition(position);
 
-        Coordinates coordinates = getCoordinates(position, inputPosition);
-        Direction direction = Direction.getDirectionFromString(inputPosition[2]);
-
-        this.position = new Position(coordinates, direction);
+        this.position = new Position(getCoordinates(inputPosition), Direction.getDirectionFromString(inputPosition[2]));
     }
 
-    private Coordinates getCoordinates(String position, String[] inputPosition) throws InvalidMowerStartingPosition {
+    private Coordinates getCoordinates(String[] inputPosition) throws InvalidMowerStartingPosition {
         String startingCoordinates = String.join(" ", inputPosition[0], inputPosition[1]);
         if (Coordinates.isInvalidCoordinates(startingCoordinates))
-            throw new InvalidMowerStartingPosition(position);
+            throw new InvalidMowerStartingPosition(startingCoordinates);
 
         Coordinates coordinates = new Coordinates(startingCoordinates);
         if (lawn.isOutLawn(coordinates)) {
-            throw new InvalidMowerStartingPosition(position);
+            throw new InvalidMowerStartingPosition(startingCoordinates);
         }
         return coordinates;
     }
 
-    public Lawn getLawn() {
-        return lawn;
-    }
-
-    public void setLawn(Lawn lawn) {
-        this.lawn = lawn;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
 
     public Position getPosition() {
         return this.position;
@@ -83,7 +69,7 @@ public class Mower implements Callable<Position> {
 
     public void goForward() {
         Coordinates nextCoordinates = position.getNextCoordinates();
-        if(!lawn.isOutLawn(nextCoordinates))
+        if (!lawn.isOutLawn(nextCoordinates))
             this.position.setCoordinates(nextCoordinates);
     }
 
@@ -103,17 +89,17 @@ public class Mower implements Callable<Position> {
     public int hashCode() {
         int result = lawn != null ? lawn.hashCode() : 0;
         result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + (commands != null ? commands.hashCode() : 0);
+        result = 31 * result + commands.hashCode();
         return result;
     }
 
     @Override
-    public Position call()  {
+    public Position call() {
         this.executeCommands();
         return this.position;
     }
 
-    public void executeCommands()  {
+    private void executeCommands() {
         this.commands.forEach(command -> command.execute(this));
     }
 }

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 class Lawn {
 
-    Coordinates limitCoordinates;
+    private Coordinates limitCoordinates;
 
     public void createLimitLawnCoordinates(String dimensions) throws InvalidCoordinates {
         if (Coordinates.isInvalidCoordinates(dimensions))

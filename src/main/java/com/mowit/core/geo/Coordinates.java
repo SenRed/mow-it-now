@@ -11,8 +11,8 @@ public class Coordinates  {
 
     public Coordinates(String dimensions) {
         String[] dimensionsCardinals = dimensions.split(" ");
-        this.x = Integer.valueOf(dimensionsCardinals[0]);
-        this.y = Integer.valueOf(dimensionsCardinals[1]);
+        this.x = Integer.parseInt(dimensionsCardinals[0]);
+        this.y = Integer.parseInt(dimensionsCardinals[1]);
     }
 
     public Coordinates(int x, int y) {

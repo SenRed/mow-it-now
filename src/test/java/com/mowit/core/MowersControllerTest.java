@@ -44,7 +44,7 @@ class MowersControllerTest {
         //Given
         File validFile = new File(FileLoader.getFile("instructions.txt"));
         MowersController mowersController = new MowersController();
-        List<Position> exceptedPositions = Arrays.asList(new Position(new Coordinates(1, 3), Direction.NORTH),
+        List<Position> expectedPositions = Arrays.asList(new Position(new Coordinates(1, 3), Direction.NORTH),
                 new Position(new Coordinates(5, 1), Direction.EAST));
         //When
         mowersController.processFile(validFile);
@@ -53,7 +53,7 @@ class MowersControllerTest {
         assertThat(mowersController.getThreadPoolSize()).isEqualTo(1);
         assertThat(mowersController.getMowers())
                 .flatExtracting(Mower::getPosition)
-                .isEqualTo(exceptedPositions);
+                .isEqualTo(expectedPositions);
     }
-
+    //TODO: check when one mower try to move in occupied position by another mower
 }

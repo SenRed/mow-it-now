@@ -13,7 +13,7 @@ public enum Direction {
     WEST("W"),
     EAST("E");
 
-    private String code;
+    private final String code;
     private Direction left;
     private Direction right;
 
