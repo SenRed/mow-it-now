@@ -39,6 +39,13 @@ public class Position {
         this.direction = this.direction.getLeft();
     }
 
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
 
     public Coordinates getNextCoordinates() {
         Coordinates nextCoordinates = new Coordinates(coordinates);

@@ -6,6 +6,7 @@ import com.mowit.core.exception.InvalidMovingCommand;
 import com.mowit.core.exception.InvalidMowerStartingPosition;
 import com.mowit.core.geo.Coordinates;
 import com.mowit.core.geo.Direction;
+import com.mowit.core.geo.Obstacles;
 import com.mowit.core.geo.Position;
 
 import java.util.LinkedList;
@@ -29,7 +30,12 @@ public class Mower implements Callable<Position> {
         if (inputPosition.length != 3)
             throw new InvalidMowerStartingPosition(position);
 
-        this.position = new Position(getCoordinates(inputPosition), Direction.getDirectionFromString(inputPosition[2]));
+        Position startingPosition = new Position(getCoordinates(inputPosition), Direction.getDirectionFromString(inputPosition[2]));
+        if (Obstacles.currentMowsPosition.containsValue(startingPosition.getCoordinates()))
+            throw new InvalidMowerStartingPosition(position);
+
+        Obstacles.currentMowsPosition.put(System.identityHashCode(this), startingPosition.getCoordinates());
+        this.position = startingPosition;
     }
 
     private Coordinates getCoordinates(String[] inputPosition) throws InvalidMowerStartingPosition {
@@ -69,7 +75,7 @@ public class Mower implements Callable<Position> {
 
     public void goForward() {
         Coordinates nextCoordinates = position.getNextCoordinates();
-        if (!lawn.isOutLawn(nextCoordinates))
+        if (!lawn.isOutLawn(nextCoordinates) && !Obstacles.currentMowsPosition.containsValue(nextCoordinates))
             this.position.setCoordinates(nextCoordinates);
     }
 
@@ -100,6 +106,16 @@ public class Mower implements Callable<Position> {
     }
 
     private void executeCommands() {
-        this.commands.forEach(command -> command.execute(this));
+        this.commands.forEach(this::executeCommand);
+    }
+
+    private void executeCommand(Command command) {
+        command.execute(this);
+        Obstacles.currentMowsPosition.put(System.identityHashCode(this), this.position.getCoordinates());
+    }
+
+    public void init(String startingPosition, String instructions) throws InvalidMovingCommand, InvalidMowerStartingPosition {
+        this.createStartingPosition(startingPosition);
+        this.createCommands(instructions);
     }
 }

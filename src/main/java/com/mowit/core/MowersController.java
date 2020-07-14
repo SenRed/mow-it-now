@@ -3,6 +3,7 @@ package com.mowit.core;
 import com.mowit.core.exception.InvalidCommand;
 import com.mowit.core.exception.InvalidMovingCommand;
 import com.mowit.core.exception.InvalidMowerStartingPosition;
+import com.mowit.core.geo.Obstacles;
 import com.mowit.core.geo.Position;
 
 import java.io.File;
@@ -13,10 +14,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.*;
 
 import static com.mowit.core.exception.ErrorMessages.*;
 
@@ -27,6 +25,7 @@ class MowersController {
 
     public MowersController() {
         super();
+        Obstacles.currentMowsPosition = new ConcurrentHashMap<>();
     }
 
     public void processFile(File inputCommands) throws IOException, InvalidCommand {
@@ -42,12 +41,11 @@ class MowersController {
             while (sc.hasNextLine()) {
                 String startingPosition = sc.nextLine();
                 if (!sc.hasNextLine()) {
-                    throw new InvalidMovingCommand(EMPTY_MOWER_MOVING_COMMANDS.getMsg() +(extractedMowers.size()+1));
+                    throw new InvalidMovingCommand(EMPTY_MOWER_MOVING_COMMANDS.getMsg() + (extractedMowers.size() + 1));
                 }
                 String instructions = sc.nextLine();
                 Mower mower = new Mower(lawn);
-                mower.createStartingPosition(startingPosition);
-                mower.createCommands(instructions);
+                mower.init(startingPosition, instructions);
                 extractedMowers.add(mower);
             }
         }
@@ -70,4 +68,5 @@ class MowersController {
     public int getThreadPoolSize() {
         return executor.getMaximumPoolSize();
     }
+
 }
