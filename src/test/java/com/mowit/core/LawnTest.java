@@ -31,7 +31,7 @@ class LawnTest {
         //When
         lawn.createLimitLawnCoordinates(lawnLimits);
         //Then
-        assertThat(lawn.getLimitCoordinates()).isEqualToComparingFieldByField(expectedCoordinates);
+        assertThat(lawn.getLimitCoordinates()).isEqualTo(expectedCoordinates);
     }
 
     @Test

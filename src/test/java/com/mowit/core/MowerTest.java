@@ -85,7 +85,7 @@ class MowerTest {
         //When
         mower.goRight();
         //Then
-        assertThat(mower.getPosition()).isEqualToComparingFieldByField(expectedPosition);
+        assertThat(mower.getPosition()).isEqualTo(expectedPosition);
     }
 
     @Test
@@ -96,7 +96,7 @@ class MowerTest {
         //When
         mower.goLeft();
         //Then
-        assertThat(mower.getPosition()).isEqualToComparingFieldByField(expectedPosition);
+        assertThat(mower.getPosition()).isEqualTo(expectedPosition);
     }
 
     @Test
@@ -110,7 +110,7 @@ class MowerTest {
         mower.goForward();
         mower.goRight();
         //Then
-        assertThat(mower.getPosition()).isEqualToComparingFieldByField(expectedPosition);
+        assertThat(mower.getPosition()).isEqualTo(expectedPosition);
     }
     @Test void should_move_if_next_position_is_free() throws InvalidMowerStartingPosition {
         //Given
